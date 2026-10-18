@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Biblioteca</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Sistema Biblioteca</h1>
+        <nav>
+            <button onclick="mostrarSecao('livros')" class="nav-btn active">Livros</button>
+            <button onclick="mostrarSecao('categorias')" class="nav-btn">Categorias</button>
+            <button onclick="mostrarSecao('autores')" class="nav-btn">Autores</button>
+        </nav>
+    </header>
+
+    <main>
+        <div id="mensagem" class="mensagem hidden"></div>
+
+        <!-- SEÇÃO LIVROS -->
+        <section id="livros" class="secao-visivel">
+            <div class="secao-header">
+                <h2>Livros</h2>
+                <button onclick="abrirFormLivro()" class="btn-primario">+ Novo Livro</button>
+            </div>
+
+            <form id="form-livro" class="form-oculto">
+                <h3 id="titulo-form-livro">Cadastrar Livro</h3>
+                <input type="hidden" id="livro-id">
+                <div class="campo">
+                    <label for="livro-titulo">Título *</label>
+                    <input type="text" id="livro-titulo" maxlength="200" required>
+                </div>
+                <div class="campo-row">
+                    <div class="campo">
+                        <label for="livro-preco">Preço *</label>
+                        <input type="number" id="livro-preco" min="0.01" step="0.01" required>
+                    </div>
+                    <div class="campo">
+                        <label for="livro-quantidade">Quantidade *</label>
+                        <input type="number" id="livro-quantidade" min="0" required>
+                    </div>
+                </div>
+                <div class="campo">
+                    <label for="livro-categoria">Categoria *</label>
+                    <select id="livro-categoria" required></select>
+                </div>
+                <div class="campo">
+                    <label for="livro-autores">Autores * (Ctrl+clique para múltiplos)</label>
+                    <select id="livro-autores" multiple required></select>
+                </div>
+                <fieldset>
+                    <legend>Detalhes do Livro</legend>
+                    <div class="campo-row">
+                        <div class="campo">
+                            <label for="detalhe-paginas">Páginas *</label>
+                            <input type="number" id="detalhe-paginas" min="1" required>
+                        </div>
+                        <div class="campo">
+                            <label for="detalhe-editora">Editora *</label>
+                            <input type="text" id="detalhe-editora" maxlength="100" required>
+                        </div>
+                    </div>
+                    <div class="campo">
+                        <label for="detalhe-isbn">ISBN *</label>
+                        <input type="text" id="detalhe-isbn" maxlength="20" required>
+                    </div>
+                    <div class="campo">
+                        <label for="detalhe-resumo">Resumo</label>
+                        <textarea id="detalhe-resumo" maxlength="2000" rows="3"></textarea>
+                    </div>
+                </fieldset>
+                <div class="botoes-form">
+                    <button type="submit" class="btn-primario">Salvar</button>
+                    <button type="button" onclick="fecharForm('form-livro')" class="btn-secundario">Cancelar</button>
+                </div>
+            </form>
+
+            <div class="tabela-wrapper">
+                <table id="tabela-livros">
+                    <thead>
+                        <tr>
+                            <th>ID</th><th>Título</th><th>Preço</th><th>Qtd</th><th>Categoria</th><th>Autores</th><th>Editora</th><th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- SEÇÃO CATEGORIAS -->
+        <section id="categorias">
+            <div class="secao-header">
+                <h2>Categorias</h2>
+                <button onclick="abrirFormCategoria()" class="btn-primario">+ Nova Categoria</button>
+            </div>
+
+            <form id="form-categoria" class="form-oculto">
+                <h3 id="titulo-form-categoria">Cadastrar Categoria</h3>
+                <input type="hidden" id="categoria-id">
+                <div class="campo">
+                    <label for="categoria-nome">Nome *</label>
+                    <input type="text" id="categoria-nome" maxlength="100" required>
+                </div>
+                <div class="botoes-form">
+                    <button type="submit" class="btn-primario">Salvar</button>
+                    <button type="button" onclick="fecharForm('form-categoria')" class="btn-secundario">Cancelar</button>
+                </div>
+            </form>
+
+            <div class="tabela-wrapper">
+                <table id="tabela-categorias">
+                    <thead>
+                        <tr><th>ID</th><th>Nome</th><th>Ações</th></tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- SEÇÃO AUTORES -->
+        <section id="autores">
+            <div class="secao-header">
+                <h2>Autores</h2>
+                <button onclick="abrirFormAutor()" class="btn-primario">+ Novo Autor</button>
+            </div>
+
+            <form id="form-autor" class="form-oculto">
+                <h3 id="titulo-form-autor">Cadastrar Autor</h3>
+                <input type="hidden" id="autor-id">
+                <div class="campo">
+                    <label for="autor-nome">Nome *</label>
+                    <input type="text" id="autor-nome" maxlength="150" required>
+                </div>
+                <div class="botoes-form">
+                    <button type="submit" class="btn-primario">Salvar</button>
+                    <button type="button" onclick="fecharForm('form-autor')" class="btn-secundario">Cancelar</button>
+                </div>
+            </form>
+
+            <div class="tabela-wrapper">
+                <table id="tabela-autores">
+                    <thead>
+                        <tr><th>ID</th><th>Nome</th><th>Ações</th></tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+
+    <script src="app.js"></script>
+</body>
+</html>
